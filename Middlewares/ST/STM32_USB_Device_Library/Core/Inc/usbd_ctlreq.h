@@ -76,6 +76,7 @@ extern "C" {
 USBD_StatusTypeDef  USBD_StdDevReq(USBD_HandleTypeDef  *pdev, USBD_SetupReqTypedef  *req);
 USBD_StatusTypeDef  USBD_StdItfReq(USBD_HandleTypeDef  *pdev, USBD_SetupReqTypedef  *req);
 USBD_StatusTypeDef  USBD_StdEPReq(USBD_HandleTypeDef  *pdev, USBD_SetupReqTypedef  *req);
+USBD_StatusTypeDef  USBD_StdMSIDFDReq(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req);
 
 
 void USBD_CtlError(USBD_HandleTypeDef  *pdev, USBD_SetupReqTypedef *req);

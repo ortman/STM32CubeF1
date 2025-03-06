@@ -268,6 +268,11 @@ USBD_StatusTypeDef USBD_LL_SetupStage(USBD_HandleTypeDef *pdev, uint8_t *psetup)
 
   pdev->ep0_data_len = pdev->request.wLength;
 
+#if (USBD_MSFT_ENABLED == 1)
+  if ((pdev->request.bmRequest & USB_REQ_RECIPIENT_MS_FD) == USB_REQ_RECIPIENT_MS_FD) {
+    USBD_StdMSIDFDReq(pdev, &pdev->request);
+  } else {
+#endif
   switch (pdev->request.bmRequest & 0x1FU)
   {
     case USB_REQ_RECIPIENT_DEVICE:
@@ -286,6 +291,9 @@ USBD_StatusTypeDef USBD_LL_SetupStage(USBD_HandleTypeDef *pdev, uint8_t *psetup)
       USBD_LL_StallEP(pdev, (pdev->request.bmRequest & 0x80U));
       break;
   }
+#if (USBD_MSFT_ENABLED == 1)
+  }
+#endif
 
   return USBD_OK;
 }

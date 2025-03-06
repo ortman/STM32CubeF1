@@ -80,6 +80,7 @@ extern "C" {
 #define  USBD_IDX_SERIAL_STR                            0x03U
 #define  USBD_IDX_CONFIG_STR                            0x04U
 #define  USBD_IDX_INTERFACE_STR                         0x05U
+#define  USBD_IDX_MSFT_STR                              0xEEU
 
 #define  USB_REQ_TYPE_STANDARD                          0x00U
 #define  USB_REQ_TYPE_CLASS                             0x20U
@@ -90,6 +91,8 @@ extern "C" {
 #define  USB_REQ_RECIPIENT_INTERFACE                    0x01U
 #define  USB_REQ_RECIPIENT_ENDPOINT                     0x02U
 #define  USB_REQ_RECIPIENT_MASK                         0x03U
+#define  USB_REQ_RECIPIENT_MS_FD                        0xC0U
+#define  USB_REQ_RECIPIENT_MS_EP                        0xC1U
 
 #define  USB_REQ_GET_STATUS                             0x00U
 #define  USB_REQ_CLEAR_FEATURE                          0x01U
@@ -218,6 +221,11 @@ typedef struct
   uint8_t  *(*GetSerialStrDescriptor)(USBD_SpeedTypeDef speed, uint16_t *length);
   uint8_t  *(*GetConfigurationStrDescriptor)(USBD_SpeedTypeDef speed, uint16_t *length);
   uint8_t  *(*GetInterfaceStrDescriptor)(USBD_SpeedTypeDef speed, uint16_t *length);
+#if (USBD_MSFT_ENABLED == 1)
+  uint8_t  *(*GetMsftStrDescriptor)(USBD_SpeedTypeDef speed , uint16_t *length);
+  uint8_t  *(*GetMSIDFeatureDescriptor)(USBD_SpeedTypeDef speed , USBD_SetupReqTypedef  *req , uint16_t *length);
+  uint32_t MSFT_VENDORID;
+#endif
 #if (USBD_LPM_ENABLED == 1U)
   uint8_t  *(*GetBOSDescriptor)(USBD_SpeedTypeDef speed, uint16_t *length);
 #endif
